@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd" xmlns:tns="http://xmlns.example.com/1681022574190" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.example.com/1681022574190">
+    <import namespace="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd" location="Schema.xsd"/>
+    <message name="input">
+        <part name="part1" element="ns:input"/>
+    </message>
+    <message name="output">
+        <part name="part1" element="ns:output"/>
+    </message>
+    <portType name="PortType">
+        <operation name="Operation">
+            <input message="tns:input"/>
+            <output message="tns:output"/>
+        </operation>
+    </portType>
+</definitions>

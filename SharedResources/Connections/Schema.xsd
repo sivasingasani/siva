@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/Practice20/SharedResources/Connections/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/Practice20/SharedResources/Connections/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="COMPANY_LIST">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="COMPANY_ID"/>
+				<xs:element ref="COMPANY_NAME"/>
+				<xs:element ref="ESTD"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="COMPANY_ID" type="xs:string"/>
+	<xs:element name="COMPANY_NAME" type="xs:string"/>
+	<xs:element name="ESTD" type="xs:string"/>
+</xs:schema>

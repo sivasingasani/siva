@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="TIBCOEMPLOYEEDETAILS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="input"/>
+				<xs:element ref="output"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="input">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NAME" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="output">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MOBILE" type="xs:string"/>
+				<xs:element name="DESIGNATION" type="xs:string"/>
+				<xs:element name="SALARY" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

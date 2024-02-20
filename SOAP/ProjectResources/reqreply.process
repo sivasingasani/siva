@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx="http://xmlns.example.com/1681022574190/OperationImpl/SOAP/ProjectResources">
+    <wsdl:import namespace="http://xmlns.example.com/1681022574190/OperationImpl/SOAP/ProjectResources" location="/SOAP/ConcreteWSDL.wsdl"/>
+    <pd:name>SOAP/ProjectResources/reqreply.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="TIBCOEMPLOYEEDETAILS">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="NAME" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <TIBCOEMPLOYEEDETAILS>
+            <MOBILE>
+                <xsl:value-of select="$SOAPRequestReply/outputMessage/ns:output/ns:MOBILE"/>
+            </MOBILE>
+            <DESIGNATION>
+                <xsl:value-of select="$SOAPRequestReply/outputMessage/ns:output/ns:DESIGNATION"/>
+            </DESIGNATION>
+            <SALARY>
+                <xsl:value-of select="$SOAPRequestReply/outputMessage/ns:output/ns:SALARY"/>
+            </SALARY>
+        </TIBCOEMPLOYEEDETAILS>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="TIBCOEMPLOYEEDETAILS">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="MOBILE" type="xsd:string"/>
+                    <xsd:element name="DESIGNATION" type="xsd:string"/>
+                    <xsd:element name="SALARY" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1681023619785</pd:targetNamespace>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>304</pd:x>
+        <pd:y>67</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:SOAP</service>
+            <servicePort>SOAPEventSource</servicePort>
+            <operation>Operation</operation>
+            <soapAction>/SOAP/ProjectResources/SOAP</soapAction>
+            <endpointURL>http://localhost:8080/SOAP/ProjectResources/SOAP</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:input>
+                    <ns:NAME>
+                        <xsl:value-of select="$Start/TIBCOEMPLOYEEDETAILS/NAME"/>
+                    </ns:NAME>
+                </ns:input>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

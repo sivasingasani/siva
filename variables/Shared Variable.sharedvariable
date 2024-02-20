@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx="http://www.tibco.com/schemas/Practice20/SharedResources/Connections/Schema.xsd">
+    <import namespace="http://www.tibco.com/schemas/Practice20/SharedResources/Connections/Schema.xsd" schemaLocation="/SharedResources/Connections/Schema.xsd"/>
+    <name>Shared Variable</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <persistent>true</persistent>
+        <multi-engine>false</multi-engine>
+        <initialValue>byData</initialValue>
+        <initialValueRef/>
+        <initialValueData>&lt;?xml version="1.0" encoding="UTF-8"?&gt; &lt;root&gt;     &lt;value&gt;100&lt;/value&gt; &lt;/root&gt;</initialValueData>
+        <xsdString>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsdString>
+    </config>
+</BWSharedResource>

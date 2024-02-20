@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/schemas/Practice20/rest/sharedresources/Schema.xsd" xmlns:pfx="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd" schemaLocation="/SOAP/SharedResources/Schema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/Practice20/rest/sharedresources/Schema.xsd" schemaLocation="/rest/sharedresources/Schema.xsd"/>
+    <pd:name>rest/projectresources/GetEmployeeDetails.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:Request"/>
+    <pd:startX>105</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx2:Response>
+            <pfx2:AccountBenificiary>
+                <xsl:value-of select="$JDBC-Query/resultSet/Record[1]/ACCOUNT_BENIFICIARY"/>
+            </pfx2:AccountBenificiary>
+            <pfx2:AccountBalance>
+                <xsl:value-of select="$JDBC-Query/resultSet/Record[1]/ACCOUNT_BALANCE"/>
+            </pfx2:AccountBalance>
+        </pfx2:Response>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:Response"/>
+    <pd:endX>496</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1681049200190</pd:targetNamespace>
+    <pd:activity name="JDBC Query">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>296</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/rest/sharedresources/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>select Account_Benificiary,Account_balance from tbl_account_test where Account_ID=?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>Account_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>ACCOUNT_BENIFICIARY</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ACCOUNT_BALANCE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <Account_ID>
+                    <xsl:value-of select="$Start/pfx2:Request/pfx2:AccountID"/>
+                </Account_ID>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>JDBC Query</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Query</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd2" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlPfx="http://xmlns.example.com/1685900001700" xmlns:pfx2="http://xmlns.example.com/1681022574190/OperationImpl/SOAP/ProjectResources" xmlns:pfx="http://xmlns.example.com/1685901188793">
+    <wsdl:import namespace="http://xmlns.example.com/1685900001700" location="/soap1/SharedResources/EmployeeWSDL.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1685901188793" location="/soap1/Employee_WSDL.wsdl"/>
+    <pd:name>soap1/SharedResources/EmployeeMgrOperation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:Employeeinput"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>65</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:Employeeoutput>
+            <response>
+                <ns2:EmployeeDetails>
+                    <ns2:EmployeeAge>
+                        <xsl:value-of select="$SOAPRequestReply/outputMessage/ns2:EmployeeDetails/ns2:EmployeeAge"/>
+                    </ns2:EmployeeAge>
+                    <ns2:EmployeeDesignation>
+                        <xsl:value-of select="$SOAPRequestReply/outputMessage/ns2:EmployeeDetails/ns2:EmployeeDesignation"/>
+                    </ns2:EmployeeDesignation>
+                    <ns2:EmployeeName>
+                        <xsl:value-of select="$SOAPRequestReply/outputMessage/ns2:EmployeeDetails/ns2:EmployeeName"/>
+                    </ns2:EmployeeName>
+                </ns2:EmployeeDetails>
+            </response>
+        </wsdlPfx:Employeeoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:Employeeoutput"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>65</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1685901188915</pd:targetNamespace>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>292</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <timeout>30</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <servicePort>HTTPEndpoint</servicePort>
+            <operation>Operation</operation>
+            <service>pfx:EmployeeWSDL-service0</service>
+            <soapAction>/soap1/SharedResources/EmployeeWSDL-service0.serviceagent/EmployeeMgrEndpoint0/Operation</soapAction>
+            <endpointURL>http://localhost:8080/soap1/SharedResources/EmployeeWSDL-service0.serviceagent/HTTPEndpoint</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:Employee>
+                    <ns:EmployeeCode>
+                        <xsl:value-of select="$Start/wsdlPfx:Employeeinput/request/ns:Employee/ns:EmployeeCode"/>
+                    </ns:EmployeeCode>
+                </ns:Employee>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

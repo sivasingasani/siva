@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/Practice20/rest2/sharedresources/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/Practice20/rest2/sharedresources/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="tbl_account_test">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ACCOUNT_ID"/>
+				<xs:element ref="ACCOUNT_BENIFICIARY"/>
+				<xs:element ref="ACCOUNT_BALANCE"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ACCOUNT_ID" type="xs:string"/>
+	<xs:element name="ACCOUNT_BENIFICIARY" type="xs:string"/>
+	<xs:element name="ACCOUNT_BALANCE" type="xs:string"/>
+</xs:schema>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/Practice20/SOAP/SharedResources/Schema.xsd" schemaLocation="/SOAP/SharedResources/Schema.xsd"/>
+    <pd:name>rest/projectresources/UpdateEmployeeDetails.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="tbl_account_test">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Account_Balance" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>105</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <tbl_account_test>
+            <Account_Benificiary>
+                <xsl:value-of select="$JDBC-Update/jdbcUpdateActivityOutput/noOfUpdates"/>
+            </Account_Benificiary>
+        </tbl_account_test>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="tbl_account_test">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Account_Benificiary" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>496</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1681049200190</pd:targetNamespace>
+    <pd:activity name="JDBC Update">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>304</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/rest/sharedresources/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>UPDATE tbl_account_test SET Account_Benificiary='siva' WHERE Account_Balance=?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>Account_Balance</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <Account_Balance>
+                    <xsl:value-of select="$Start/tbl_account_test/Account_Balance"/>
+                </Account_Balance>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>JDBC Update</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Update</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

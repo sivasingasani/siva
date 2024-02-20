@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns1="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd2" xmlns:tns="http://xmlns.example.com/1685901188793" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1685901188793">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="EmployeeAge" type="xs:string"/>
+            <xs:element name="EmployeeDesignation" type="xs:string"/>
+            <xs:element name="EmployeeDetails">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns1:EmployeeAge"/>
+                        <xs:element ref="ns1:EmployeeDesignation"/>
+                        <xs:element ref="ns1:EmployeeName"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="EmployeeName" type="xs:string"/>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/Practice20/soap1/SharedResources/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="Employee">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:EmployeeCode"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="EmployeeCode" type="xs:string"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="EmployeeWSDL-service0">
+        <wsdl:port name="HTTPEndpoint" binding="tns:HTTPEndpointBinding">
+            <soap:address location="http://localhost:8080/soap1/SharedResources/EmployeeWSDL-service0.serviceagent/HTTPEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="EmployeeMgr">
+        <wsdl:operation name="Operation">
+            <wsdl:input message="tns:Employeeinput"/>
+            <wsdl:output message="tns:Employeeoutput"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="HTTPEndpointBinding" type="tns:EmployeeMgr">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Operation">
+            <soap:operation style="document" soapAction="/soap1/SharedResources/EmployeeWSDL-service0.serviceagent/EmployeeMgrEndpoint0/Operation"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="response"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="Employeeinput">
+        <wsdl:part name="request" element="ns0:Employee"/>
+    </wsdl:message>
+    <wsdl:message name="Employeeoutput">
+        <wsdl:part name="response" element="ns1:EmployeeDetails"/>
+    </wsdl:message>
+</wsdl:definitions>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/Practice20/rest/sharedresources/Schema1.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/Practice20/rest/sharedresources/Schema1.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="OutputSet">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PO_BAENIFICIARY"/>
+				<xs:element ref="PO_BALANCE"/>
+				<xs:element ref="PO_TYPE"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PO_BAENIFICIARY" type="xs:string"/>
+	<xs:element name="PO_BALANCE" type="xs:int"/>
+	<xs:element name="PO_TYPE" type="xs:string"/>
+</xs:schema>

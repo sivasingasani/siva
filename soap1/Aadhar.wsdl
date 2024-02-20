@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:tns="http://xmlns.example.com/1691405239257" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.tibco.com/schemas/Banking/SharedResources/Schemas/Schema.xsd2" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1691405239257">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/Banking/SharedResources/Schemas/Schema.xsd2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/Banking/SharedResources/Schemas/Schema.xsd2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="AadharNo" type="xs:string"/>
+            <xs:element name="Aadharvalid" type="xs:string"/>
+            <xs:element name="ErrorCode" type="xs:string"/>
+            <xs:element name="GetAadharOTPRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:TransactionID" minOccurs="0"/>
+                        <xs:element ref="ns0:AadharNo" minOccurs="0"/>
+                        <xs:element ref="ns0:Mobileno" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetAadharOTPResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:TransactionID" minOccurs="0"/>
+                        <xs:element ref="ns0:AadharNo" minOccurs="0"/>
+                        <xs:element ref="ns0:MobileNo" minOccurs="0"/>
+                        <xs:element ref="ns0:OTP" minOccurs="0"/>
+                        <xs:element ref="ns0:Status" minOccurs="0"/>
+                        <xs:element ref="ns0:ErrorCode" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="MobileNo" type="xs:string"/>
+            <xs:element name="Mobileno" type="xs:string"/>
+            <xs:element name="OTP" type="xs:string"/>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="TransactionID" type="xs:string"/>
+            <xs:element name="TransactionId" type="xs:string"/>
+            <xs:element name="ValidateAadharRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:TransactionID" minOccurs="0"/>
+                        <xs:element ref="ns0:AadharNo" minOccurs="0"/>
+                        <xs:element ref="ns0:MobileNo" minOccurs="0"/>
+                        <xs:element ref="ns0:OTP" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ValidateAadharResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:TransactionId" minOccurs="0"/>
+                        <xs:element ref="ns0:AadharNo" minOccurs="0"/>
+                        <xs:element ref="ns0:MobileNo" minOccurs="0"/>
+                        <xs:element ref="ns0:OTP" minOccurs="0"/>
+                        <xs:element ref="ns0:Status" minOccurs="0"/>
+                        <xs:element ref="ns0:Aadharvalid" minOccurs="0"/>
+                        <xs:element ref="ns0:ErrorCode" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="Aadhar">
+        <wsdl:port name="SOAP HTTP" binding="tns:SOAP HTTPBinding">
+            <soap:address location="http://localhost:5555/implementations/interfaces/Aadhar.serviceagent/SOAP%2520HTTP"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="ValidateAadhar">
+            <wsdl:input message="tns:ValidateAadharRequest"/>
+            <wsdl:output message="tns:ValidateAadharResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAadharOTP">
+            <wsdl:input message="tns:GetAadharOTPRequest"/>
+            <wsdl:output message="tns:GetAadharOTPResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SOAP HTTPBinding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ValidateAadhar">
+            <soap:operation style="document" soapAction="/implementations/interfaces/Aadhar.serviceagent/PortTypeEndpoint1/ValidateAadhar"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ValidateAadharRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ValidateAadharResponse"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetAadharOTP">
+            <soap:operation style="document" soapAction="/implementations/interfaces/Aadhar.serviceagent/PortTypeEndpoint1/GetAadharOTP"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="GetAadharOTPRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="GetAadharOTPResponse"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="ValidateAadharRequest">
+        <wsdl:part name="ValidateAadharRequest" element="ns0:ValidateAadharRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ValidateAadharResponse">
+        <wsdl:part name="ValidateAadharResponse" element="ns0:ValidateAadharResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAadharOTPRequest">
+        <wsdl:part name="GetAadharOTPRequest" element="ns0:GetAadharOTPRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAadharOTPResponse">
+        <wsdl:part name="GetAadharOTPResponse" element="ns0:GetAadharOTPResponse"/>
+    </wsdl:message>
+</wsdl:definitions>

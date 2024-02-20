@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx="http://www.tibco.com/schemas/Practice20/HTTP/Schema.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/Practice20/HTTP/Schema.xsd" schemaLocation="/HTTP/BookStoreDetails.xsd"/>
+    <pd:name>HTTP/GetProc.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="ID" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>128</pd:startX>
+    <pd:startY>92</pd:startY>
+    <pd:returnBindings>
+        <xsl:choose>
+            <xsl:when test="string-length($Map-Data/root/pfx:BookDetails)>0">
+                <Data>
+                    <AscIIcontent>
+                        <xsl:value-of select="tib:render-xml($Map-Data/root/pfx:BookDetails,true(),true())"/>
+                    </AscIIcontent>
+                </Data>
+            </xsl:when>
+            <xsl:when test="not(exists($Map-Data/root/pfx:BookDetails))">
+                <Data>
+                    <AscIIcontent>
+                        <xsl:value-of select="&quot;204-No Records found&quot;"/>
+                    </AscIIcontent>
+                </Data>
+            </xsl:when>
+            <xsl:otherwise>
+                <Data>
+                    <AscIIcontent>
+                        <xsl:value-of select="tib:render-xml($_error/ns2:ErrorReport,true(),true())"/>
+                    </AscIIcontent>
+                </Data>
+            </xsl:otherwise>
+        </xsl:choose>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="Data">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="AscIIcontent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>835</pd:endX>
+    <pd:endY>93</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1688915321761</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>444</pd:x>
+        <pd:y>256</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>837</pd:x>
+        <pd:y>252</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx2:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:render-xml($_error/ns2:ErrorReport,true(),true())"/>
+                </message>
+            </pfx2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>637</pd:x>
+        <pd:y>92</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:BookDetails"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Parse-Data/Output/Rows/pfx:BookDetails[pfx:ID=$Start/root/ID][1]">
+                    <pfx:BookDetails>
+                        <xsl:if test="pfx:ID">
+                            <pfx:ID>
+                                <xsl:value-of select="pfx:ID"/>
+                            </pfx:ID>
+                        </xsl:if>
+                        <xsl:if test="pfx:BookName">
+                            <pfx:BookName>
+                                <xsl:value-of select="pfx:BookName"/>
+                            </pfx:BookName>
+                        </xsl:if>
+                        <xsl:if test="pfx:Author">
+                            <pfx:Author>
+                                <xsl:value-of select="pfx:Author"/>
+                            </pfx:Author>
+                        </xsl:if>
+                        <xsl:if test="pfx:YearOfPublish">
+                            <pfx:YearOfPublish>
+                                <xsl:value-of select="pfx:YearOfPublish"/>
+                            </pfx:YearOfPublish>
+                        </xsl:if>
+                        <xsl:if test="pfx:cost">
+                            <pfx:cost>
+                                <xsl:value-of select="pfx:cost"/>
+                            </pfx:cost>
+                        </xsl:if>
+                        <pfx:Language>
+                            <xsl:value-of select="pfx:Language"/>
+                        </pfx:Language>
+                    </pfx:BookDetails>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>438</pd:x>
+        <pd:y>92</pd:y>
+        <config>
+            <InputType>String</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/HTTP/Data Format.sharedparse</ParseSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <text>
+                    <xsl:value-of select="$Read-File/ns1:ReadActivityOutputTextClass/fileContent/textContent"/>
+                </text>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>282</pd:x>
+        <pd:y>92</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="&quot;D:\BookDetails.csv&quot;"/>
+                </fileName>
+            </ns:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
